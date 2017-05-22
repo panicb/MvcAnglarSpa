@@ -1,0 +1,89 @@
+﻿<div ng-controller="coffeeSpotsCtrl as vm">
+    <form name="vm.cofeeSpotEditForm">
+        <table class="table table-striped table-bordered table-hover">
+            <thead>
+                <tr>
+                    <td class="col-md-2">Name</td>
+                    <td class="col-md-2">Address</td>
+                    <td class="col-md-2">Description</td>
+                    <td class="col-md-2">WorkingHours</td>
+                    <td class="col-md-2">FoundationDate </td>
+                    <td class="col-md-2">Edit coffee spot</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="coffeeSpot in vm.coffeeSpots" ng-include="vm.getTemplateToDisplay(coffeeSpot)">
+            </tbody>
+        </table>
+    </form>
+
+    <script type="text/ng-template" id="displayCoffeeShop">
+        <td>
+            <span>{{coffeeSpot.Name}}</span>
+        </td>
+        <td>
+            <span>{{coffeeSpot.Address}}</span>
+        </td>
+        <td>
+            <span>{{coffeeSpot.Description}}</span>
+        </td>
+        <td>
+            <span>{{coffeeSpot.WorkingHours}}</span>
+        </td>
+        <td>
+            <span>{{coffeeSpot.FoundationDate}}</span>
+        </td>
+        <td>
+            <button class="btn btn-default" type="button" ng-click="vm.editCoffeeSpot(coffeeSpot)">Edit</button>
+        </td>
+    </script>
+
+    <script type="text/ng-template" id="editCoffeeShop">
+        <td><input type="text" ng-model="vm.coffeeSpotToEdit.Name" required /></td>
+        <td><input type="text" ng-model="vm.coffeeSpotToEdit.Address" /></td>
+        <td><input type="text" ng-model="vm.coffeeSpotToEdit.Description" /></td>
+        <td><input type="text" ng-model="vm.coffeeSpotToEdit.WorkingHours" /></td>
+        <td><input type="text" ng-model="vm.coffeeSpotToEdit.FoundationDate" /></td>
+        <td>
+            <button class="btn btn-default" type="submit" ng-click="vm.saveCoffeeSpot()">Save</button>
+            <button class="btn btn-default" type="reset" ng-click="vm.cancelEdit()">Cancel</button>
+        </td>
+    </script>
+
+    <!-- todo: refactor to component, with students? -->
+    <div>
+        <form name="vm.coffeSpotToAddForm" ng-model="vm.coffeeSpotToAdd" >
+            <div>
+                <button class="btn btn-default" type="button" ng-hide="vm.isAdd" ng-click="vm.isAdd = true">Add New Coffee spot</button>
+                <button class="btn btn-default" type="submit" ng-show="vm.isAdd" ng-click="vm.addCoffeeSpot()">Save Cofee spot</button>
+                <button class="btn btn-default" type="reset" ng-show="vm.isAdd" ng-click="vm.isAdd = false;">Cancel</button>
+            </div>
+            <div ng-show="vm.isAdd">
+                <div class="form-group">
+                    <label class="control-label">Name</label>
+                    <input class="form-control" type="text" name="name" ng-model="vm.coffeeSpotToAdd.Name" required />
+                    <!-- todo: add angular validations -->
+                    <!--<div ng-show="vm.coffeSpotToAddForm.name.$error.required">
+                        field is required
+                    </div>-->
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Address</label>
+                    <input class="form-control" type="text" name="address" ng-model="vm.coffeeSpotToAdd.Address" required />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Description</label>
+                    <input class="form-control" type="text" name="desc" ng-model="vm.coffeeSpotToAdd.Description" required />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">WorkingHours</label>
+                    <input class="form-control" type="text" name="workinghours" ng-model="vm.coffeeSpotToAdd.WorkingHours" pattern="/[0-2]?\d?[:][0-5]?\d[-][0-2]?\d?[:][0-5]?\d/" required />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">FoundationDate</label>
+                    <input class="form-control" type="text" name="foundationdate" ng-model="vm.coffeeSpotToAdd.FoundationDate" required />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
